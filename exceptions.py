@@ -1,5 +1,5 @@
 from typing import Iterable, List
-from option import CommandLineOption
+from .option import CommandLineOption
 from colorama import Fore, Style
 
 class MissingRequiredOption(Exception):

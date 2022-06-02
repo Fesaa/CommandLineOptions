@@ -1,9 +1,8 @@
 import sys, re
 from typing import List, Dict
 
-from exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
-from option import CommandLineOption
-
+from .exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
+from .option import CommandLineOption
 
 class CommandLineOptions:
 
@@ -32,13 +31,12 @@ class CommandLineOptions:
     
     def on_start(self) -> Dict[str, CommandLineOption]:
 
-        if self.show_info:
-            print(str(self))
+        
 
         for option in sys.argv[1::]:
             if split := re.match(r'\w*(=|:)\w*', option):
                 option_args = option.split(split.group(1))
-                option = option_args[0].lower()
+                option = option_args[0]
                 argument = option_args[1]
 
                 if option in self.options.keys():
@@ -114,6 +112,10 @@ class CommandLineOptions:
         missing_required_options = [j for j in self.options.values() if j.required and j.argument is None]
     
         if missing_required_options == []:
+
+            if self.show_info:
+                print(str(self))
+
             return {option_name: option.argument for option_name, option in self.options.items()}
         else:
             raise MissingRequiredOption(missing_required_options)

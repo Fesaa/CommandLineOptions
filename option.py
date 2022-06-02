@@ -31,7 +31,7 @@ class CommandLineOption:
 
     def __init__(self, name: str, regex: str = r'.*', default_option: Any = None,
                 return_type: Union[str, float, int, bool, List[Union[str, float, int, bool]]] = str,  info: str = None) -> None:
-        self.name = name.lower()
+        self.name = name
         self.regex = regex
         self.default_option = default_option
         self.required = True if self.default_option is None else False
