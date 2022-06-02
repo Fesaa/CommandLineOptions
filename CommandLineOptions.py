@@ -45,22 +45,22 @@ class CommandLineOptions:
                     
                     if re.match(self.options[option].regex, argument):
 
-                        if isinstance(command_line_option.return_type, str):
+                        if command_line_option.return_type is str:
                             argument = argument
 
-                        elif isinstance(command_line_option.return_type, int):
+                        elif command_line_option.return_type is int:
                             if argument.isdigit():
                                 argument = int(argument)
                             else:
                                 raise InvalidArgumentType(command_line_option)
 
-                        elif isinstance(command_line_option.return_type, float):
+                        elif command_line_option.return_type is float:
                             if argument.isdigit():
                                 argument = float(argument)
                             else:
                                 raise InvalidArgumentType(command_line_option)
 
-                        elif isinstance(command_line_option.return_type, bool):
+                        elif command_line_option.return_type is bool:
                             argument = True if argument == 'True' else False
 
                         elif command_line_option.return_type is List[str]:
