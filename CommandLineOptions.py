@@ -16,7 +16,7 @@ class CommandLineOptions:
     
     def __str__(self) -> str:
         if self.options:
-            return "\n".join([str(option) for option in self.options.values()])
+            return "\n".join([str(option) for option in self.options.values() if option.argument != option.default_option])
         else:
             return ""
     
@@ -55,9 +55,9 @@ class CommandLineOptions:
                                 raise InvalidArgumentType(command_line_option)
 
                         elif command_line_option.return_type is float:
-                            if argument.isdigit():
+                            try:
                                 argument = float(argument)
-                            else:
+                            except ValueError:
                                 raise InvalidArgumentType(command_line_option)
 
                         elif command_line_option.return_type is bool:
@@ -81,9 +81,9 @@ class CommandLineOptions:
                             temp = list()
 
                             for arg in argument.split(','):
-                                if arg.isdigit():
+                                try:
                                     temp.append(float(arg))
-                                else:
+                                except ValueError:
                                     raise InvalidArgumentType(command_line_option)
                             
                             argument = temp
