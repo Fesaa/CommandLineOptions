@@ -1,5 +1,16 @@
 from typing import Any, TypedDict, Union, List
 from colorama import Fore, Style
+from enum import Enum
+
+class RegexOptions(Enum):
+    BOOL = r'\b(False|True)\b'
+    DATE = r'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$'
+    INT = r'\d*'
+    SIMPLE_STR = r'\w*'
+    COMPLEX_STR = r'.*'
+
+    def __str__(self) -> str:
+        return self.value
 
 TYPE_TO_STR = {
     str: 'str',
@@ -23,18 +34,18 @@ class InvalidReturnType(Exception):
 
 class OptionDict(TypedDict):
     regex: str
-    default_option: Any
+    default_argument: Any
     required: bool
     return_type: Union[str, float, int, bool]
 
 class CommandLineOption:
 
-    def __init__(self, name: str, regex: str = r'.*', default_option: Any = None,
+    def __init__(self, name: str, regex: Union[str, RegexOptions] = r'.*', default_argument: Any = None,
                 return_type: Union[str, float, int, bool, List[Union[str, float, int, bool]]] = str,  info: str = None) -> None:
         self.name = name
-        self.regex = regex
-        self.default_option = default_option
-        self.required = True if self.default_option is None else False
+        self.regex = str(regex)
+        self.default_argument = default_argument
+        self.required = True if self.default_argument is None else False
 
         try:
             TYPE_TO_STR[return_type]
@@ -43,15 +54,16 @@ class CommandLineOption:
         else:
             self.return_type = return_type
         self.info = info
-        self.argument = self.default_option
+        self.argument = self.default_argument
+
     
     def __iter__(self) -> OptionDict:
-        yield from {self.name: {'regex': self.regex, 'default_option': self.default_option,
+        yield from {self.name: {'regex': self.regex, 'default_argument': self.default_argument,
                                 'return_type': self.return_type, 'required': self.required}}.items()
     
     def __str__(self) -> str:
         return f'\n{self.info}'\
                f'\n\tMust match: {Fore.BLUE}{self.regex}{Style.RESET_ALL}'\
-               f'\n\tDefault: {Fore.YELLOW}{self.default_option}{Style.RESET_ALL}'\
+               f'\n\tDefault: {Fore.YELLOW}{self.default_argument}{Style.RESET_ALL}'\
                f'\n\tReturns a {Fore.MAGENTA}{TYPE_TO_STR[self.return_type]}{Style.RESET_ALL}' \
                f'\n\tRequired: {Fore.GREEN if self.required else Fore.RED}{self.required}{Style.RESET_ALL}'

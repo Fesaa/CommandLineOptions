@@ -16,7 +16,7 @@ class CommandLineOptions:
     
     def __str__(self) -> str:
         if self.options:
-            return "\n".join([str(option) for option in self.options.values() if option.argument != option.default_option])
+            return "\n".join([str(option) for option in self.options.values() if option.argument != option.default_argument])
         else:
             return ""
     
@@ -25,9 +25,6 @@ class CommandLineOptions:
             self.options[option.name] = option
         else:
             self.options = {option.name: option}
-    
-    def fetch(self, option_name: str) -> CommandLineOption:
-        return self.options[option_name]
     
     def on_start(self) -> Dict[str, CommandLineOption]:
 

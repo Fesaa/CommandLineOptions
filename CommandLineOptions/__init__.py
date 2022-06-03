@@ -1,2 +1,2 @@
 from .CommandLineOptions import CommandLineOptions
-from .option import CommandLineOption
+from .option import CommandLineOption, RegexOptions

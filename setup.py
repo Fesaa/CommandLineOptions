@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='CommandLineOptions',
-    version='0.0.4',
+    version='0.0.5',
     author='Fesa',
     url='https://github.com/Fesaa/CommandLineOptions',
     license='GNU GPLv3',
