@@ -1,8 +1,8 @@
 import sys, re
 from typing import List, Dict
 
-from .exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
-from .option import CommandLineOption
+from exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
+from option import CommandLineOption
 
 class CommandLineOptions:
 
@@ -31,9 +31,15 @@ class CommandLineOptions:
     
     def on_start(self) -> Dict[str, CommandLineOption]:
 
-        
+        all_options = sys.argv[1::]
 
-        for option in sys.argv[1::]:
+        if '--options' in all_options:
+            all_options.pop(all_options.index('--options'))
+            print("\n".join(option.name for option in self.options.values()))
+            if len(all_options) == 0:
+                return ""
+
+        for option in all_options:
             if split := re.match(r'\w*(=|:)\w*', option):
                 option_args = option.split(split.group(1))
                 option = option_args[0]
