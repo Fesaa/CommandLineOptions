@@ -37,7 +37,7 @@ class CommandLineOptions:
             all_options.pop(all_options.index('--options'))
             print("\n".join(option.name for option in self.options.values()))
             if len(all_options) == 0:
-                return ""
+                return sys.exit()
 
         for option in all_options:
             if split := re.match(r'\w*(=|:)\w*', option):
