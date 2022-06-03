@@ -1,1 +1,2 @@
-from CommandLineOptions.CommandLineOptions import CommandLineOptions, CommandLineOption
+from .CommandLineOptions import CommandLineOptions
+from .option import CommandLineOption
