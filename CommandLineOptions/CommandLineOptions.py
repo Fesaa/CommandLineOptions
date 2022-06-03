@@ -1,8 +1,8 @@
 import sys, re
 from typing import List, Dict
 
-from exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
-from option import CommandLineOption
+from .exceptions import InvalidArgument, InvalidLayout, InvalidOption, InvalidArgumentType, MissingRequiredOption
+from .option import CommandLineOption
 
 class CommandLineOptions:
 
