@@ -28,7 +28,7 @@ class InvalidOption(Exception):
         self.given_option = given_option
     
     def __str__(self) -> str:
-        s = "\n".join([str(option) for option in self.options])
+        s = "\n".join([str(option.name) for option in self.options])
         return f'{self.given_option} is not a valid CommandLineOption.\nThe accepted options are:\n {s}.'
 
 class InvalidArgument(Exception):
