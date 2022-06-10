@@ -13,6 +13,7 @@ class CommandLineOptions:
             self.options = None
         
         self.show_info = show_info
+        self.rules = []
     
     def __str__(self) -> str:
         if self.options:
@@ -25,6 +26,11 @@ class CommandLineOptions:
             self.options[option.name] = option
         else:
             self.options = {option.name: option}
+        
+        return option
+    
+    def add_dependency(self, option1: CommandLineOption, option2: CommandLineOption):
+        self.rules.append([option1, option2])
     
     def on_start(self) -> Dict[str, CommandLineOption]:
 
@@ -113,7 +119,13 @@ class CommandLineOptions:
                 raise InvalidLayout
 
         missing_required_options = [j for j in self.options.values() if j.required and j.argument is None]
-    
+
+        for rule in self.rules:
+            if rule[0] in missing_required_options and rule[1] in missing_required_options:
+                 MissingRequiredOption(missing_required_options)
+            else:
+                missing_required_options.pop(missing_required_options.index(rule[1] if rule[1] in missing_required_options else rule[0]))
+
         if missing_required_options == []:
 
             if self.show_info:
