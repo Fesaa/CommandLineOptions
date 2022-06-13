@@ -32,6 +32,9 @@ class CommandLineOptions:
     def add_dependency(self, option1: CommandLineOption, option2: CommandLineOption):
         self.rules.append([option1, option2])
     
+    def default_dict(self):
+        return {option.name: option.default_argument for option in self.options.values()}
+    
     def on_start(self) -> Dict[str, CommandLineOption]:
 
         all_options = sys.argv[1::]
