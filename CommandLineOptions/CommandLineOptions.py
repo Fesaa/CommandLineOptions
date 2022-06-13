@@ -38,7 +38,7 @@ class CommandLineOptions:
 
         if '--options' in all_options:
             all_options.pop(all_options.index('--options'))
-            print("\n".join(option.name for option in self.options.values()))
+            print("\n".join(option for option in self.options.values()))
             if len(all_options) == 0:
                 return sys.exit()
 
