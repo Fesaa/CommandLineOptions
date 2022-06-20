@@ -1,6 +1,8 @@
 from typing import Iterable, List
-from .option import CommandLineOption
 from colorama import Fore, Style
+
+from .option import CommandLineOption
+from .enums import SplitOption
 
 class MissingRequiredOption(Exception):
 
@@ -14,11 +16,12 @@ class MissingRequiredOption(Exception):
 
 class InvalidLayout(Exception):
 
-    def __init__(self, *args):
+    def __init__(self, split_option: SplitOption, *args):
         super().__init__(args)
+        self.split_option = split_option
 
     def __str__(self):
-        return f'CommandLineOptions must be given in the form {Fore.CYAN}name(=, :)value{Style.RESET_ALL}.'
+        return f'CommandLineOptions must be given in the form {Fore.CYAN}{self.split_option}{Style.RESET_ALL}.'
 
 class InvalidOption(Exception):
 
