@@ -105,7 +105,7 @@ class CommandLineOptions:
                             raise InvalidArgumentType(command_line_option)
 
                     elif command_line_option.return_type is bool:
-                        argument = True if argument == 'True' else False
+                        argument = True if argument.lower() == 'true' else False
 
                     elif command_line_option.return_type is List[str]:
                         argument = argument.split(',')
