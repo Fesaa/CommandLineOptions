@@ -78,6 +78,8 @@ class CommandLineOptions:
 
         all_options = self._argument_processor()
 
+        print(all_options)
+
         for entry in all_options:
 
             option = entry[0]
