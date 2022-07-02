@@ -48,7 +48,7 @@ class CommandLineOptions:
             if len(args) == 0:
                 return sys.exit()
         
-        if self.split_layout.value is SplitOption.DEFAULT:
+        if self.split_layout.value is SplitOption.DEFAULT.value:
             for entry in args:
                 if split := re.match(r'\w*(=|:)\w*', entry):
                     option_args = entry.split(split.group(1))
@@ -56,7 +56,7 @@ class CommandLineOptions:
                 else:
                     raise InvalidLayout(self.split_layout)
         
-        elif self.split_layout is SplitOption.DASH:
+        elif self.split_layout is SplitOption.DASH.value:
             for index, entry in enumerate(args):
                 if entry.startswith('--') and index + 1 < len(args) and not args[index + 1].startswith('--'):
                     out.append((entry.removeprefix('--'), args[index + 1]))
@@ -77,8 +77,6 @@ class CommandLineOptions:
     def on_start(self) -> Dict[str, CommandLineOption]:
 
         all_options = self._argument_processor()
-
-        print(all_options)
 
         for entry in all_options:
 
@@ -154,7 +152,6 @@ class CommandLineOptions:
                 raise InvalidOption(option, self.options.values())
 
         missing_required_options = [j for j in self.options.values() if j.required and j.argument is None]
-        print(missing_required_options)
 
         for rule in self.rules:
             if rule[0] in missing_required_options and rule[1] in missing_required_options:
