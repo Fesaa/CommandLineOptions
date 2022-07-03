@@ -158,7 +158,7 @@ class CommandLineOptions:
                  MissingRequiredOption(missing_required_options)
             else:
                 if rule[0] in missing_required_options:
-                    missing_required_options.pop(missing_required_options.index(rule[1]))
+                    missing_required_options.pop(missing_required_options.index(rule[0]))
                 elif rule[1] in missing_required_options:
                     missing_required_options.pop(missing_required_options.index(rule[1]))
 
