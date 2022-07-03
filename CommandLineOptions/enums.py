@@ -9,7 +9,7 @@ class SplitOption(Enum):
         return self.value
 
 class RegexOptions(Enum):
-    BOOL = r'\b(False|True)\b'
+    BOOL = r'\b(False|True|true|false)\b'
     DATE = r'^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$'
     INT = r'\d*'
     SIMPLE_STR = r'\w*'
